@@ -1,6 +1,8 @@
+using Detego.Api;
 using Detego.Api.Endpoints.Hashes;
 using Detego.Api.Endpoints.Hashes.Get;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +20,15 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
            .AllowAnyMethod()
            .AllowAnyHeader();
 }));
+
+// Register EF Core with SQLite
+builder.Services.AddDbContext<HashesDbContext>(options =>
+{
+    var connectionString = builder.Configuration
+        .GetConnectionString("sqlite");
+
+    options.UseSqlite(connectionString);
+});
 
 var app = builder.Build();
 

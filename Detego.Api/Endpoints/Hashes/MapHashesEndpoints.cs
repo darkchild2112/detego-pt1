@@ -8,8 +8,8 @@ public static class EndpointMapping
     {
         var jobs = app.MapGroup("/api/v1/hashes").WithTags("Hashes");
 
-        jobs.MapGet("/", async (GetHashesHandler handler, CancellationToken cancellationToken) 
-            => await handler.HandleAsync(cancellationToken))
+        jobs.MapGet("/", async (GetHashesHandler handler, CancellationToken cancellationToken, int page = 1, int size = 100) // TODO: move these to the handler
+            => await handler.HandleAsync(page, size, cancellationToken))
             .Produces<HashDto[]>()
             .WithName("GetHashes");
 
