@@ -6,7 +6,7 @@ public static class EndpointMapping
 {
     public static IEndpointRouteBuilder MapHashesEndpoints(this IEndpointRouteBuilder app)
     {
-        var jobs = app.MapGroup("/hashes").WithTags("Hashes");
+        var jobs = app.MapGroup("/api/v1/hashes").WithTags("Hashes");
 
         jobs.MapGet("/", async (GetHashesHandler handler, CancellationToken cancellationToken) 
             => await handler.HandleAsync(cancellationToken))
