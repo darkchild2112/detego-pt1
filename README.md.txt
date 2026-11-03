@@ -9,3 +9,7 @@ in the page number to view.
 - The app should provide a text input for a hash and have an option to search the
 `safe_hashes` table for any matching hash. A confirmation should be shown if that hash
 exists. Bonus if you can allow the user to enter multiple hashes to search at once.
+
+# References
+
+https://aspire.dev/integrations/databases/sqlite/sqlite-host/?aspire-lang=csharp
