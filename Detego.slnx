@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Database/">
+    <File Path="Database/hashes.sqlite" />
+  </Folder>
+  <Folder Name="/Docs/">
+    <File Path="README.md.txt" />
+  </Folder>
+  <Project Path="Detego.Api/Detego.Api.csproj" />
+  <Project Path="Detego.AppHost/Detego.AppHost.csproj" />
+  <Project Path="Detego.ServiceDefaults/Detego.ServiceDefaults.csproj" />
+</Solution>
