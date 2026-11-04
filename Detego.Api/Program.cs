@@ -1,18 +1,25 @@
 using Detego.Api;
 using Detego.Api.Endpoints.Hashes;
 using Detego.Api.Endpoints.Hashes.Get;
+using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.OpenApiVersion = OpenApiSpecVersion.OpenApi3_0;
+});
 
 // Handlers
 builder.Services.AddScoped<GetHashesHandler>();
+builder.Services.AddScoped<IValidator<GetHashesRequest>, GetHashesValidator>();
 
 builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
 {

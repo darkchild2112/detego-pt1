@@ -13,3 +13,9 @@ exists. Bonus if you can allow the user to enter multiple hashes to search at on
 # References
 
 https://aspire.dev/integrations/databases/sqlite/sqlite-host/?aspire-lang=csharp
+
+Typed Results
+https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/responses?view=aspnetcore-10.0
+
+Fluent Validation
+https://docs.fluentvalidation.net/en/latest/index.html

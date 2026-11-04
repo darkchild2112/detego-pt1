@@ -1,4 +1,5 @@
 ﻿using Detego.Api.Endpoints.Hashes.Get;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Detego.Api.Endpoints.Hashes;
 
@@ -8,8 +9,8 @@ public static class EndpointMapping
     {
         var jobs = app.MapGroup("/api/v1/hashes").WithTags("Hashes");
 
-        jobs.MapGet("/", async (GetHashesHandler handler, CancellationToken cancellationToken, int page = 1, int size = 100) // TODO: move these to the handler
-            => await handler.HandleAsync(page, size, cancellationToken))
+        jobs.MapGet("/", async (GetHashesHandler handler, CancellationToken cancellationToken, [FromQuery]int page, [FromQuery] int size)
+            => await handler.HandleAsync(new GetHashesRequest(page, size), cancellationToken))
             .Produces<HashDto[]>()
             .WithName("GetHashes");
 
