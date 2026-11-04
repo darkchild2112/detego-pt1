@@ -10,26 +10,30 @@ public sealed class GetHashesHandler(
 {
     public async Task<Results<Ok<GetHashesResponse>, ValidationProblem>> HandleAsync(GetHashesRequest request, CancellationToken cancellationToken)
     {
-        var validationResult = validator.Validate(request);
+        var validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
             return TypedResults.ValidationProblem(validationResult.ToDictionary());
 
-        var totalCount = await dbContext.Hashes.CountAsync(cancellationToken);
+        var query = dbContext.Hashes.AsNoTracking();
+
+        if(!string.IsNullOrWhiteSpace(request.Search))
+            query = query.Where(x => EF.Functions.Like(x.Code, $"%{request.Search}%"));
+
+        var totalCount = await query.CountAsync(cancellationToken);
 
         // Check that the page they've requested isn't out of range
-        if(request.Page > totalCount / request.Size)
+        if (totalCount > request.Size && request.Page > totalCount / request.Size)
             return TypedResults.ValidationProblem(new Dictionary<string, string[]>
-                    {
-                        ["Error"] = ["Requested page is greater than the total number of pages"]
-                    });
+            {
+                ["Error"] = ["Requested page is greater than the total number of pages"]
+            });
 
-        var hashes = await dbContext.Hashes
-                .AsNoTracking()
+        var hashes = await query
                 .OrderBy(x => x.Id)
                 .Skip((request.Page -1) * request.Size)
                 .Take(request.Size)
-                .ToListAsync(cancellationToken);
+                .ToArrayAsync(cancellationToken);
 
         // TODO: send the total pages back to the front end for validation
         var response = new GetHashesResponse(totalCount, hashes.Select(e => new HashDto(e.Id, e.Code)).ToArray());

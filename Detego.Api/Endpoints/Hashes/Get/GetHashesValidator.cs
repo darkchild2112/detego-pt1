@@ -12,5 +12,7 @@ public class GetHashesValidator : AbstractValidator<GetHashesRequest>
         RuleFor(request => request.Size)
             .GreaterThan(9).WithMessage("Page size must be greater than or equal to 10")
             .LessThan(1001).WithMessage("Page Size must be less than or equal to 1000");
+
+        // TODO: do we want to limit the search to a minimum number of characters
     }
 }
