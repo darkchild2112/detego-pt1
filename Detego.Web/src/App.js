@@ -2,19 +2,20 @@ import { useState, useEffect } from 'react';
 
 function App() {
 
-  const pageSize = 1000;
+  const pageSize = 10;
   const [totalHashes, setTotalHashes] = useState(0);
   const [hashes, setHashes] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    fetch(`https://localhost:7281/api/v1/hashes?page=1&size=${pageSize}`)
+    fetch(`https://localhost:7281/api/v1/hashes?page=${currentPage}&size=${pageSize}`)
       .then((response) => response.json())
       .then((data) => {
         setHashes(data.hashes);
         setTotalHashes(data.totalResults);
       })
       .catch((error) => console.error('Error fetching hashes:', error));
-  }, []);
+  }, [currentPage]);
 
   return (
     <>
@@ -22,12 +23,30 @@ function App() {
       <p>Total hashes: {totalHashes}</p>
 
       <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            {Array.from({ length: Math.ceil(totalHashes / pageSize) }, (_, index) => (
-              <li key={index} class="page-item"><a class="page-link" href="#">{index + 1}</a></li>
-            ))}
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        <ul>
+          <li>
+            <button 
+              disabled={currentPage === 1}
+              onClick={(e) => { e.preventDefault(); setCurrentPage((prev) => Math.max(1, prev - 1)); }}>
+                Previous
+            </button>
+          </li>
+          <li>
+            <span>Page: </span>
+            <input 
+              type="number" 
+              min="1" 
+              max={Math.ceil(totalHashes / pageSize)} 
+              value={currentPage} onChange={(e) => setCurrentPage(parseInt(e.target.value) || 1)} />
+            <span> of {Math.ceil(totalHashes / pageSize)}</span>
+          </li>
+          <li>
+            <button 
+              disabled={currentPage === Math.ceil(totalHashes / pageSize)}
+              onClick={(e) => { e.preventDefault(); setCurrentPage((prev) => Math.min(Math.ceil(totalHashes / pageSize), prev + 1)); }}>
+                Next
+            </button>
+          </li>
         </ul>
       </nav>
                   <hr />
