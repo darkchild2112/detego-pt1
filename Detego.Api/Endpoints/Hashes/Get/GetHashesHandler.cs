@@ -22,8 +22,10 @@ public sealed class GetHashesHandler(
 
         var totalCount = await query.CountAsync(cancellationToken);
 
+        var totalPages = totalCount > request.Size ? totalCount / request.Size : 1;
+
         // Check that the page they've requested isn't out of range
-        if (totalCount > request.Size && request.Page > totalCount / request.Size)
+        if (totalCount > request.Size && request.Page > totalPages)
             return TypedResults.ValidationProblem(new Dictionary<string, string[]>
             {
                 ["Error"] = ["Requested page is greater than the total number of pages"]
@@ -35,8 +37,7 @@ public sealed class GetHashesHandler(
                 .Take(request.Size)
                 .ToArrayAsync(cancellationToken);
 
-        // TODO: send the total pages back to the front end for validation
-        var response = new GetHashesResponse(totalCount, hashes.Select(e => new HashDto(e.Id, e.Code)).ToArray());
+        var response = new GetHashesResponse(totalCount, totalPages, hashes.Select(e => new HashDto(e.Id, e.Code)).ToArray());
 
         return TypedResults.Ok(response);
     }

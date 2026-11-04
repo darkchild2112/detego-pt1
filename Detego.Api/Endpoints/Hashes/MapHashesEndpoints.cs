@@ -10,11 +10,12 @@ public static class EndpointMapping
         var jobs = app.MapGroup("/api/v1/hashes").WithTags("Hashes");
 
         jobs.MapGet("/", async (
-            GetHashesHandler handler, 
-            [FromQuery]int page, 
-            [FromQuery]int size,
-            [FromQuery]string? search,
-            CancellationToken cancellationToken)
+            GetHashesHandler handler,
+            CancellationToken cancellationToken,
+            [FromQuery] string? search,
+            [FromQuery]int page = 1, 
+            [FromQuery]int size = 10
+            )
             => await handler.HandleAsync(new GetHashesRequest(search, page, size), cancellationToken))
             .Produces<HashDto[]>()
             .WithName("GetHashes");

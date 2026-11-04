@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import Search from './components/Search/Search';
+
 function App() {
 
   const pageSize = 10;
@@ -7,6 +9,7 @@ function App() {
   const [hashes, setHashes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [totalPages, setTotalPages] = useState(0);
 
   const apiUrl = `https://localhost:7281/api`;
 
@@ -35,12 +38,20 @@ function App() {
     }
   }
 
+  function handlePageChange(value) {
+    if (value < 1 || value > totalPages) return;
+    const newPage = parseInt(value) || 1; 
+    setCurrentPage(newPage); 
+    getHashes(newPage, pageSize, searchKeyword);
+  }
+
   function getHashes(page, size, search) {
       fetch(`${apiUrl}/v1/hashes?page=${page}&size=${size}&search=${search}`)
       .then((response) => response.json())
       .then((data) => {
         setHashes(data.hashes);
         setTotalHashes(data.totalResults);
+        setTotalPages(data.totalPages);
       })
       .catch((error) => console.error('Error fetching hashes:', error));
   }
@@ -49,12 +60,7 @@ function App() {
     <>
       <h1>Detego Pt.1 Hash Table</h1>
       <p>Total records: {totalHashes.toLocaleString()}</p>
-      <div>
-        <input type="text" placeholder="Search Hashes..." onChange={(e) => setSearchKeyword(e.target.value)} />
-        <button 
-          disabled={searchKeyword === ''}
-          onClick={searchHandler}>Search</button>
-      </div>
+      <Search searchKeyword={searchKeyword} keywordChangeHandler={setSearchKeyword} searchHandler={searchHandler} />
       <nav>
         <ul>
           <li>
@@ -69,13 +75,14 @@ function App() {
             <input 
               type="number" 
               min="1" 
-              max={Math.ceil(totalHashes / pageSize)} 
-              value={currentPage} onChange={(e) => setCurrentPage(parseInt(e.target.value) || 1)} />
-            <span> of {Math.ceil(totalHashes / pageSize).toLocaleString()}</span>
+              disabled={totalPages === 1}
+              max={totalPages} 
+              value={currentPage} onChange={(e) => handlePageChange(e.target.value)} />
+            <span> of {totalPages.toLocaleString()}</span>
           </li>
           <li>
             <button 
-              disabled={currentPage === Math.ceil(totalHashes / pageSize)}
+              disabled={currentPage === totalPages}
               onClick={nextPageHandler}>
                 Next
             </button>
