@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 
 import Search from './components/Search/Search';
+import HashTable from './components/HashTable/HashTable';
+import Pagination from './components/Pagination/Pagination';
+
+import { getHashes } from './clients/hashApiClient';
 
 function App() {
 
@@ -11,22 +15,20 @@ function App() {
   const [searchKeyword, setSearchKeyword] = useState('');
   const [totalPages, setTotalPages] = useState(0);
 
-  const apiUrl = `https://localhost:7281/api`;
-
   useEffect(() => {
-    getHashes(currentPage, pageSize, '');
+    getHashesHandler(currentPage, pageSize, '');
   }, []);
 
   function searchHandler() {
-    getHashes(1, pageSize, searchKeyword);
     setCurrentPage(1);
+    getHashesHandler(1, pageSize, searchKeyword);
   }
 
   function nextPageHandler() {
     if (currentPage < Math.ceil(totalHashes / pageSize)) {
       const nextPage = currentPage + 1;
       setCurrentPage(nextPage);
-      getHashes(nextPage, pageSize, searchKeyword);
+      getHashesHandler(nextPage, pageSize, searchKeyword);
     }
   }
 
@@ -34,79 +36,44 @@ function App() {
     if (currentPage > 1) {
       const prevPage = currentPage - 1;
       setCurrentPage(prevPage);
-      getHashes(prevPage, pageSize, searchKeyword);
+      getHashesHandler(prevPage, pageSize, searchKeyword);
     }
   }
 
-  function handlePageChange(value) {
+  function pageChangeHandler(value) {
     if (value < 1 || value > totalPages) return;
     const newPage = parseInt(value) || 1; 
     setCurrentPage(newPage); 
-    getHashes(newPage, pageSize, searchKeyword);
+    getHashesHandler(newPage, pageSize, searchKeyword);
   }
 
-  function getHashes(page, size, search) {
-      fetch(`${apiUrl}/v1/hashes?page=${page}&size=${size}&search=${search}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setHashes(data.hashes);
-        setTotalHashes(data.totalResults);
-        setTotalPages(data.totalPages);
-      })
-      .catch((error) => console.error('Error fetching hashes:', error));
+  function getHashesHandler(page, size, search) {
+      getHashes(page, size, search)
+        .then((data) => {
+          setHashes(data.hashes);
+          setTotalHashes(data.totalResults);
+          setTotalPages(data.totalPages);
+        })
+        .catch((error) => console.error('Error fetching hashes:', error));
   }
 
   return (
     <>
       <h1>Detego Pt.1 Hash Table</h1>
       <p>Total records: {totalHashes.toLocaleString()}</p>
-      <Search searchKeyword={searchKeyword} keywordChangeHandler={setSearchKeyword} searchHandler={searchHandler} />
-      <nav>
-        <ul>
-          <li>
-            <button 
-              disabled={currentPage === 1}
-              onClick={prevPageHandler}>
-                Previous
-            </button>
-          </li>
-          <li>
-            <span>Page: </span>
-            <input 
-              type="number" 
-              min="1" 
-              disabled={totalPages === 1}
-              max={totalPages} 
-              value={currentPage} onChange={(e) => handlePageChange(e.target.value)} />
-            <span> of {totalPages.toLocaleString()}</span>
-          </li>
-          <li>
-            <button 
-              disabled={currentPage === totalPages}
-              onClick={nextPageHandler}>
-                Next
-            </button>
-          </li>
-        </ul>
-      </nav>
-      <hr />
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Hash</th>
-          </tr>
-        </thead>
-        <tbody>
-          {hashes.map((hash) => (
-            <tr key={hash.id}>
-              <td>{hash.id}</td>
-              <td>{hash.code}</td>
-            </tr>
-          ))}
-        </tbody>      
-      </table>
-
+      <Search 
+        searchKeyword={searchKeyword} 
+        keywordChangeHandler={setSearchKeyword} 
+        searchHandler={searchHandler} 
+      />
+      <Pagination 
+        currentPage={currentPage} 
+        totalPages={totalPages}
+        prevPageHandler={prevPageHandler}
+        nextPageHandler={nextPageHandler}
+        pageChangeHandler={pageChangeHandler}
+      /> 
+      <HashTable hashes={hashes} />
     </>
   );
 }

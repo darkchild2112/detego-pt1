@@ -1,4 +1,4 @@
-using Detego.Api;
+using Detego.Api.Data;
 using Detego.Api.Endpoints.Hashes;
 using Detego.Api.Endpoints.Hashes.Get;
 using FluentValidation;

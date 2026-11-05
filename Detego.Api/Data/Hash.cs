@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Detego.Api;
+namespace Detego.Api.Data;
 
 [Table("safe_hashes")]
 public class Hash

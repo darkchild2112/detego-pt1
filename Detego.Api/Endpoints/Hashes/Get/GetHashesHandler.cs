@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Detego.Api.Data;
+using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 

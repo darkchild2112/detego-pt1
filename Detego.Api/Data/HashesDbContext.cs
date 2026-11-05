@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Detego.Api;
+namespace Detego.Api.Data;
 
 public class HashesDbContext(DbContextOptions<HashesDbContext> options) : DbContext(options)
 {
