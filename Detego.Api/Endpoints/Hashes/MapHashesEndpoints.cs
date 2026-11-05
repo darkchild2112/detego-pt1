@@ -17,7 +17,7 @@ public static class EndpointMapping
             [FromQuery]int size = 10
             )
             => await handler.HandleAsync(new GetHashesRequest(search, page, size), cancellationToken))
-            .Produces<HashDto[]>()
+            .Produces<GetHashesResponse>()
             .WithName("GetHashes");
 
         return app;

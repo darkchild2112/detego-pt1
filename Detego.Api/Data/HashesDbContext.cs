@@ -2,7 +2,7 @@
 
 namespace Detego.Api.Data;
 
-public class HashesDbContext(DbContextOptions<HashesDbContext> options) : DbContext(options)
+public sealed class HashesDbContext(DbContextOptions<HashesDbContext> options) : DbContext(options)
 {
     public DbSet<Hash> Hashes { get; set; }
 }

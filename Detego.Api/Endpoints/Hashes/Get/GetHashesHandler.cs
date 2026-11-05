@@ -38,7 +38,10 @@ public sealed class GetHashesHandler(
                 .Take(request.Size)
                 .ToArrayAsync(cancellationToken);
 
-        var response = new GetHashesResponse(totalCount, totalPages, hashes.Select(e => new HashDto(e.Id, e.Code)).ToArray());
+        var response = new GetHashesResponse(
+            totalCount, 
+            totalPages, 
+            hashes.Select(e => new HashDto(e.Id, e.Code)).ToArray());
 
         return TypedResults.Ok(response);
     }

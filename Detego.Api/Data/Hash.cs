@@ -3,7 +3,7 @@
 namespace Detego.Api.Data;
 
 [Table("safe_hashes")]
-public class Hash
+public sealed class Hash
 {
     [Column("hash_id")]
     public int Id { get; set; }

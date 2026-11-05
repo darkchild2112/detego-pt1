@@ -3,7 +3,7 @@
     <File Path="Database/hashes.sqlite" />
   </Folder>
   <Folder Name="/Docs/">
-    <File Path="README.md.txt" />
+    <File Path="README.md" />
   </Folder>
   <Project Path="Detego.Api/Detego.Api.csproj" />
   <Project Path="Detego.AppHost/Detego.AppHost.csproj" />

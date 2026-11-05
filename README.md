@@ -16,6 +16,11 @@ exists. Bonus if you can allow the user to enter multiple hashes to search at on
 - Break out the logic of the handler into a Service
 - Create a copy of the Hash database for tests
 - There's no way to reset and get back to all results on the frontend
+- Health endpoint
+- Tidy up the program file with extention methods
+- Enable the Frontend in Aspire again. Also make it work with Cors policy
+- Add a no results found message
+- Loading Message ??
 
 # What I'd Do With More Time
 
@@ -24,6 +29,7 @@ exists. Bonus if you can allow the user to enter multiple hashes to search at on
 - Use Typescript on the frontend. this was a concious choice not to use it at the begining as I knew it would slow me down
 - Highlighted the search keyword in the table
 - Linting and Prettier
+- CI Pipeline (Github Action)
 
 # References
 

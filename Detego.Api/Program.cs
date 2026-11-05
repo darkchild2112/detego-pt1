@@ -14,10 +14,12 @@ builder.AddServiceDefaults();
 
 builder.Services.AddOpenApi(options =>
 {
+    // This fixes a problem with the parameters not working in the UI
+    // https://github.com/swagger-api/swagger-ui/issues/10646?utm_source=chatgpt.com
+    // ChatGPT helped me find this
     options.OpenApiVersion = OpenApiSpecVersion.OpenApi3_0;
 });
 
-// Handlers
 builder.Services.AddScoped<GetHashesHandler>();
 builder.Services.AddScoped<IValidator<GetHashesRequest>, GetHashesValidator>();
 
@@ -28,7 +30,6 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
            .AllowAnyHeader();
 }));
 
-// Register EF Core with SQLite
 builder.Services.AddDbContext<HashesDbContext>(options =>
 {
     var connectionString = builder.Configuration
