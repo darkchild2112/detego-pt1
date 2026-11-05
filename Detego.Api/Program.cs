@@ -22,9 +22,14 @@ builder.Services.AddScoped<IValidator<GetHashesRequest>, GetHashesValidator>();
 
 builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
 {
-    builder.WithOrigins("http://localhost:3000")
-           .AllowAnyMethod()
-           .AllowAnyHeader();
+    builder.SetIsOriginAllowed(origin =>
+    {
+        var uri = new Uri(origin);
+        return uri.Host == "localhost"
+            && (uri.Scheme == "http" || uri.Scheme == "https");
+    })
+    .AllowAnyMethod()
+    .AllowAnyHeader();
 }));
 
 builder.Services.AddDbContext<HashesDbContext>(options =>
