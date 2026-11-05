@@ -2,10 +2,7 @@ using Detego.Api.Data;
 using Detego.Api.Endpoints.Hashes;
 using Detego.Api.Endpoints.Hashes.Get;
 using FluentValidation;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);

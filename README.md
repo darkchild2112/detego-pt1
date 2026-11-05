@@ -1,41 +1,79 @@
-## SQLite Browser
-For this we would like you to create a small app to view and search the contents of an SQLite
-database. The app should be written using C# and WPF.
-The following requirements should be met:
-- The app should present a data grid or list view and allow the user to page through the
-`safe_hashes` table of the hashes.sqlite database. Pagination should be done using the LIMIT
-OFFSET SQL syntax and display 10 records at a time. Bonus if you can allow the user to type
-in the page number to view.
-- The app should provide a text input for a hash and have an option to search the
-`safe_hashes` table for any matching hash. A confirmation should be shown if that hash
-exists. Bonus if you can allow the user to enter multiple hashes to search at once.
+# Detego Pt.1
 
-# TODO
+## Running the Project
 
-- Break out the logic of the handler into a Service
-- Tidy up the program file with extention methods
-- Enable the Frontend in Aspire again. Also make it work with Cors policy
-- Add a no results found message
-- Loading Message ??
+This project was built using **.NET 10, C#, React and Aspire**, developed in **Visual Studio 2026**.
 
-# What I'd Do With More Time
+### Prerequisites
 
-- Add Playwright e2e tests on the front end
-- Add Unit Tests to the front end
-- Use Typescript on the frontend. this was a concious choice not to use it at the begining as I knew it would slow me down
-- Highlighted the search keyword in the table
-- Linting and Prettier
-- CI Pipeline (Github Action)
-- Might have used an InMemory version of SqlLite for the tests - didn't because creating the db structure and data would have taken extra time
+You'll need the following installed:
 
-# References
+- **.NET 10 SDK** – [Download](https://dotnet.microsoft.com/download/dotnet/10.0)
+- **Visual Studio 2026** – With the ASP.NET and web development workload installed.
+- **Node.js and npm** – [Download](https://nodejs.org/)
+- **Aspire CLI** – Used to run the API and frontend together.
 
-Aspire 
-https://aspire.dev/integrations/databases/sqlite/sqlite-host/?aspire-lang=csharp
+#### Installing Aspire
 
-Typed Results
-https://learn.microsoft.com/en-us/aspnet/core/fundamentals/minimal-apis/responses?view=aspnetcore-10.0
+Install Aspire using PowerShell:
 
-Fluent Validation
-https://docs.fluentvalidation.net/en/latest/index.html
+```powershell
+winget install Microsoft.Aspire
+```
+
+Or using the .NET CLI:
+
+```bash
+dotnet tool install -g Aspire.Cli
+```
+
+Verify it's installed:
+
+```bash
+aspire --version
+```
+
+See the [Aspire documentation](https://aspire.dev/) for more information.
+
+### Running the Application
+
+1. Open the solution in Visual Studio 2026.
+2. Set `Detego.AppHost` as the startup project.
+3. Press **F5** to run the application.
+
+Aspire will start both the API and React frontend and open the Aspire Dashboard.
+
+From the dashboard:
+
+- **API** – Click the API URL to open Swagger and test the endpoints.
+- **Website** – Click the website URL to open the React frontend, which connects to the API.
+
+Alternatively, you can run the application from the command line using `aspire run` from the repository root.
+
+### What I'd Do With More Time
+
+- **Service layer** – Move the logic from `GetHashesHandler` into a service. This would make sense for a larger project where the functionality might be reused, but felt unnecessary for something this small.
+- **Playwright tests** – Add E2E tests for the frontend.
+- **Frontend unit tests** – Add tests for the React components.
+- **TypeScript** – A conscious decision not to use it initially as I knew it would slow me down.
+- **Search highlighting** – Highlight matching keywords in the results table.
+- **Linting and Prettier** – Improve code consistency.
+- **CI pipeline** – Add GitHub Actions to build and test the project automatically.
+- **SQLite in-memory testing** – Consider using an in-memory database for integration tests rather than a copy of the main database. I avoided this because setting up the schema and test data would have taken extra time.
+- **Frontend feedback** – Add loading indicators and a "No search results found" message.
+
+### When I Used AI
+
+The bulk of the work was done by me, including the frontend, API and Aspire setup.
+
+I mainly used ChatGPT to help debug a few issues, usually where I was looking for a complicated problem and the answer was something simple.
+
+A couple of examples:
+
+- **CORS** – Spent time wondering why the frontend couldn't access the API. Turned out I'd left a trailing `/` on the configured URL.
+- **SQLite integration tests** – Had a few issues resolving the database file path because I'd forgotten the tests execute from a nested directory inside the build output.
+
+I also used ChatGPT to tidy up this README and write the Aspire installation instructions.
+
+Everything else, including the implementation and technical decisions, was my own.
 
