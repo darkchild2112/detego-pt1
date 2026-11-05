@@ -4,8 +4,8 @@ var sqllite = builder.AddSqlite("sqlite", databasePath: "..\\Detego.Database", "
     .WithSqliteWeb();
 
 var api = builder.AddProject<Projects.Detego_Api>("detego-api")
-    .WithReference(sqllite);
-    //.WithHttpHealthCheck("/health");
+    .WithReference(sqllite)
+    .WithHttpHealthCheck("/health");
 
 //builder.AddJavaScriptApp("react", "..\\Detego.Web", runScriptName: "start")
 //    .WithNpm(installCommand: "install")

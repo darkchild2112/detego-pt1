@@ -38,21 +38,7 @@ builder.Services.AddDbContext<HashesDbContext>(options =>
     options.UseSqlite(connectionString);
 });
 
-var connectionString = builder.Configuration
-    .GetConnectionString("sqlite");
-
 var app = builder.Build();
-
-//app.MapHealthChecks("/health", new HealthCheckOptions
-//{
-//    ResultStatusCodes =
-//    {
-//        [HealthStatus.Healthy] = StatusCodes.Status200OK,
-//        [HealthStatus.Degraded] = StatusCodes.Status200OK,
-//        [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
-//    },
-//    AllowCachingResponses = false
-//});
 
 app.UseCors("MyPolicy");
 

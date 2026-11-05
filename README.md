@@ -12,10 +12,7 @@ exists. Bonus if you can allow the user to enter multiple hashes to search at on
 
 # TODO
 
-- Add Integration and Unit Tests
 - Break out the logic of the handler into a Service
-- Create a copy of the Hash database for tests
-- Health endpoint
 - Tidy up the program file with extention methods
 - Enable the Frontend in Aspire again. Also make it work with Cors policy
 - Add a no results found message
