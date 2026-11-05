@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Database/">
     <File Path="Database/hashes.sqlite" />
+    <File Path="Detego.Database/hashes.test.sqlite" />
   </Folder>
   <Folder Name="/Docs/">
     <File Path="README.md" />

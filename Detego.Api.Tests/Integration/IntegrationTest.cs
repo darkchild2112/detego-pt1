@@ -5,16 +5,27 @@ using System.Text.Json;
 
 namespace Detego.Api.Tests.Integration;
 
-public abstract class IntegrationTest
+public abstract class IntegrationTest : IDisposable
 {
     private bool _disposed = false;
+    private readonly WebApplicationFactory<Program> _webApplicationFactory;
+    
     protected static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
     protected HttpClient Client { get; }
 
     public IntegrationTest()
     {
-        Client = CreateClient();
+        _webApplicationFactory = new WebApplicationFactory<Program>()
+            .WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureAppConfiguration((context, config) =>
+                {
+                    config.AddInMemoryCollection(GetConfigurationsToOverride());
+                });
+            });
+
+        Client = _webApplicationFactory.CreateClient();
     }
 
     public void Dispose()
@@ -22,17 +33,6 @@ public abstract class IntegrationTest
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-
-    protected HttpClient CreateClient() =>
-        new WebApplicationFactory<Program>()
-            .WithWebHostBuilder(builder =>
-            {
-                builder.ConfigureAppConfiguration((context, config) =>
-                {
-                    config.AddInMemoryCollection(GetConfigurationsToOverride());
-                });
-            })
-            .CreateClient();
 
     protected void ConfigureAppConfig(IConfigurationBuilder builder)
     {
@@ -67,6 +67,7 @@ public abstract class IntegrationTest
 
         if (disposing)
         {
+            _webApplicationFactory.Dispose();
             Client.Dispose();
         }
 
