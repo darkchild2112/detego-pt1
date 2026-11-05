@@ -35,7 +35,7 @@ builder.Services.AddCors(o => o.AddPolicy("MyLocalhostPolicy", builder =>
 builder.Services.AddDbContext<HashesDbContext>(options =>
 {
     var connectionString = builder.Configuration
-        .GetConnectionString("sqlite");
+        .GetConnectionString("database");
 
     options.UseSqlite(connectionString);
 });

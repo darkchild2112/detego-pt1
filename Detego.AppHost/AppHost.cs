@@ -1,13 +1,13 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var sqllite = builder.AddSqlite("sqlite", databasePath: "..//Detego.Database", "hashes.sqlite")
+var sqllite = builder.AddSqlite("Database", databasePath: "..//Detego.Database", "hashes.sqlite")
     .WithSqliteWeb();
 
-var api = builder.AddProject<Projects.Detego_Api>("detego-api")
+var api = builder.AddProject<Projects.Detego_Api>("API")
     .WithReference(sqllite)
     .WithHttpHealthCheck("/health");
 
-builder.AddJavaScriptApp("react", "..//Detego.Web", runScriptName: "start")
+builder.AddJavaScriptApp("Frontend", "..//Detego.Web", runScriptName: "start")
     .WithNpm(installCommand: "install")
     .WithReference(api)
     .WaitFor(api)
