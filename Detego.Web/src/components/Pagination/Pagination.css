@@ -1,0 +1,9 @@
+.pagination .page-item {
+    margin: 0 15px 0 0;
+    justify-content: center;
+}
+
+.pagination .page-item input[type="number"] {
+    height: stretch;
+    margin: 0 5px;
+}

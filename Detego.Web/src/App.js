@@ -58,7 +58,7 @@ function App() {
   }
 
   return (
-    <>
+    <main className="container mt-4">
       <h1>Detego Pt.1 Hash Table</h1>
       <p>Total records: {totalHashes.toLocaleString()}</p>
       <Search 
@@ -66,6 +66,9 @@ function App() {
         keywordChangeHandler={setSearchKeyword} 
         searchHandler={searchHandler} 
       />
+
+      <HashTable hashes={hashes} />
+
       <Pagination 
         currentPage={currentPage} 
         totalPages={totalPages}
@@ -73,8 +76,7 @@ function App() {
         nextPageHandler={nextPageHandler}
         pageChangeHandler={pageChangeHandler}
       /> 
-      <HashTable hashes={hashes} />
-    </>
+    </main>
   );
 }
 
