@@ -73,7 +73,7 @@ A couple of examples:
 - **CORS** – Spent time wondering why the frontend couldn't access the API. Turned out I'd left a trailing `/` on the configured URL.
 - **SQLite integration tests** – Had a few issues resolving the database file path because I'd forgotten the tests execute from a nested directory inside the build output.
 
-I also used ChatGPT to tidy up this README and write the Aspire installation instructions.
+I also used ChatGPT to tidy up this README and write the Aspire installation instructions and I used Cluade Code to do a Code Review at the end which found a couple of bugs and gave some tidy-up and code styling suggestions
 
 Everything else, including the implementation and technical decisions, was my own.
 
