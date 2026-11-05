@@ -20,7 +20,7 @@ builder.Services.AddOpenApi(options =>
 builder.Services.AddScoped<GetHashesHandler>();
 builder.Services.AddScoped<IValidator<GetHashesRequest>, GetHashesValidator>();
 
-builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+builder.Services.AddCors(o => o.AddPolicy("MyLocalhostPolicy", builder =>
 {
     builder.SetIsOriginAllowed(origin =>
     {
@@ -42,7 +42,7 @@ builder.Services.AddDbContext<HashesDbContext>(options =>
 
 var app = builder.Build();
 
-app.UseCors("MyPolicy");
+app.UseCors("MyLocalhostPolicy");
 
 app.MapDefaultEndpoints();
 

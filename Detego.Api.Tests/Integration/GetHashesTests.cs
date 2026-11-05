@@ -134,6 +134,7 @@ public sealed class GetHashesTests : IntegrationTest
     [InlineData(0)]
     [InlineData(3)]
     [InlineData(7)]
+    [InlineData(9)]
     [InlineData(10001)]
     [InlineData(10500)]
     [InlineData(50000)]
@@ -180,6 +181,7 @@ public sealed class GetHashesTests : IntegrationTest
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         Assert.NotNull(result);
+        Assert.NotEmpty(result.Hashes);
 
         foreach (var hash in result.Hashes)
         {

@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Detego.Api.Endpoints.Hashes;
 
-public static class EndpointMapping
+public static class MapHashesEndpoint
 {
     public static IEndpointRouteBuilder MapHashesEndpoints(this IEndpointRouteBuilder app)
     {
-        var jobs = app.MapGroup("/api/v1/hashes").WithTags("Hashes");
+        var hashes = app.MapGroup("/api/v1/hashes").WithTags("Hashes");
 
-        jobs.MapGet("/", async (
+        hashes.MapGet("/", async (
             GetHashesHandler handler,
             CancellationToken cancellationToken,
             [FromQuery] string? search,

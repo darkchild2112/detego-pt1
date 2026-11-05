@@ -13,6 +13,7 @@ function App() {
   const [hashes, setHashes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState('');
+  const [activeSearchKeyword, setActiveSearchKeyword] = useState('');
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
@@ -21,6 +22,7 @@ function App() {
 
   function searchHandler() {
     setCurrentPage(1);
+    setActiveSearchKeyword(searchKeyword);
     getHashesHandler(1, pageSize, searchKeyword);
   }
 
@@ -28,7 +30,7 @@ function App() {
     if (currentPage < Math.ceil(totalHashes / pageSize)) {
       const nextPage = currentPage + 1;
       setCurrentPage(nextPage);
-      getHashesHandler(nextPage, pageSize, searchKeyword);
+      getHashesHandler(nextPage, pageSize, activeSearchKeyword);
     }
   }
 
@@ -36,7 +38,7 @@ function App() {
     if (currentPage > 1) {
       const prevPage = currentPage - 1;
       setCurrentPage(prevPage);
-      getHashesHandler(prevPage, pageSize, searchKeyword);
+      getHashesHandler(prevPage, pageSize, activeSearchKeyword);
     }
   }
 
@@ -44,7 +46,7 @@ function App() {
     if (value < 1 || value > totalPages) return;
     const newPage = parseInt(value) || 1; 
     setCurrentPage(newPage); 
-    getHashesHandler(newPage, pageSize, searchKeyword);
+    getHashesHandler(newPage, pageSize, activeSearchKeyword);
   }
 
   function getHashesHandler(page, size, search) {

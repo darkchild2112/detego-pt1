@@ -9,8 +9,6 @@ public abstract class IntegrationTest : IDisposable
 {
     private bool _disposed = false;
     private readonly WebApplicationFactory<Program> _webApplicationFactory;
-    
-    protected static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
     protected HttpClient Client { get; }
 
@@ -34,12 +32,6 @@ public abstract class IntegrationTest : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    protected void ConfigureAppConfig(IConfigurationBuilder builder)
-    {
-        builder.AddJsonFile(AppConfigPath, optional: false);
-        builder.AddInMemoryCollection(GetConfigurationsToOverride());
-    }
-
     protected virtual Dictionary<string, string?> GetConfigurationsToOverride()
     {
         var databasePath = Path.GetFullPath(
@@ -57,8 +49,6 @@ public abstract class IntegrationTest : IDisposable
                 $"Data Source={databasePath};Cache=Shared;Mode=ReadWrite"
         };
     }
-
-    private static string AppConfigPath => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "appsettings.json");
 
     private void Dispose(bool disposing)
     {

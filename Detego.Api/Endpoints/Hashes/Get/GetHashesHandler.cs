@@ -23,7 +23,7 @@ public sealed class GetHashesHandler(
 
         var totalCount = await query.CountAsync(cancellationToken);
 
-        var totalPages = totalCount > request.Size ? totalCount / request.Size : 1;
+        var totalPages = totalCount > request.Size ? (int)Math.Ceiling(totalCount / (double)request.Size) : 1;
 
         // Check that the page they've requested isn't out of range
         if (totalCount > request.Size && request.Page > totalPages)
