@@ -5,6 +5,7 @@
   <Folder Name="/Docs/">
     <File Path="README.md" />
   </Folder>
+  <Project Path="Detego.Api.Tests/Detego.Api.Tests.csproj" Id="a25e29fc-1048-40de-ba0e-cae5c58aefe4" />
   <Project Path="Detego.Api/Detego.Api.csproj" />
   <Project Path="Detego.AppHost/Detego.AppHost.csproj" />
   <Project Path="Detego.ServiceDefaults/Detego.ServiceDefaults.csproj" />

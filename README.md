@@ -15,7 +15,6 @@ exists. Bonus if you can allow the user to enter multiple hashes to search at on
 - Add Integration and Unit Tests
 - Break out the logic of the handler into a Service
 - Create a copy of the Hash database for tests
-- There's no way to reset and get back to all results on the frontend
 - Health endpoint
 - Tidy up the program file with extention methods
 - Enable the Frontend in Aspire again. Also make it work with Cors policy
@@ -30,6 +29,7 @@ exists. Bonus if you can allow the user to enter multiple hashes to search at on
 - Highlighted the search keyword in the table
 - Linting and Prettier
 - CI Pipeline (Github Action)
+- Might have used an InMemory version of SqlLite for the tests - didn't because creating the db structure and data would have taken extra time
 
 # References
 

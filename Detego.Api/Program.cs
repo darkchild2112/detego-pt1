@@ -38,6 +38,9 @@ builder.Services.AddDbContext<HashesDbContext>(options =>
     options.UseSqlite(connectionString);
 });
 
+var connectionString = builder.Configuration
+    .GetConnectionString("sqlite");
+
 var app = builder.Build();
 
 //app.MapHealthChecks("/health", new HealthCheckOptions
@@ -67,3 +70,6 @@ app.UseHttpsRedirection();
 app.MapHashesEndpoints();
 
 app.Run();
+
+// Required to expose for testing
+public partial class Program { }
