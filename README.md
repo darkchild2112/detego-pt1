@@ -15,13 +15,7 @@ You'll need the following installed:
 
 #### Installing Aspire
 
-Install Aspire using PowerShell:
-
-```powershell
-winget install Microsoft.Aspire
-```
-
-Or using the .NET CLI:
+using the .NET CLI:
 
 ```bash
 dotnet tool install -g Aspire.Cli
